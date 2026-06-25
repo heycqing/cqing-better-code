@@ -21,10 +21,8 @@
 ┌─────────────────────────────────────────────────────┐
 │              理论基础层（foundations/）               │
 │                                                     │
-│  Harness Engineering ← DocDrive                     │
-│  5子系统框架          ↑                              │
-│                    实践化                            │
-│                 三模块工作流                         │
+│  Harness Engineering ──实践化──→ DocDrive            │
+│  5子系统框架                      三模块工作流        │
 └─────────────────────────────────────────────────────┘
                          ↓ 机制化
 ┌─────────────────────────────────────────────────────┐
@@ -32,8 +30,8 @@
 │                                                     │
 │  Module A          Module B          Module C       │
 │  约束文档系统      样板优先批量迁移   视觉验证清单   │
-│  (CBDA/SEL/BER/    (样板→确认清单→   (VVC预提交门控) │
-│   阻塞协议)         目标执行)                        │
+│  CBDA/SEL/BER      样板→确认清单→    VVC预提交门控   │
+│  阻塞协议          目标执行                          │
 └─────────────────────────────────────────────────────┘
                          ↓ 治理化
 ┌─────────────────────────────────────────────────────┐
@@ -46,37 +44,37 @@
 
 ---
 
-## 目录结构与文件说明
+## 目录结构
 
 ```
 cqing-better-code/
 │
-├── README.md                    本文件 — 全局导航与使用手册
+├── README.md                        本文件 — 全局导航与使用手册
 │
-├── foundations/                 理论基础层
-│   ├── harness-engineering.md   Harness Engineering 5子系统理论摘要
-│   └── docdrive.md              DocDrive 方法论定义、来源、三模块、扩展历史
+├── foundations/                     理论基础层
+│   ├── harness-engineering.md       Harness Engineering 5子系统理论摘要
+│   └── docdrive.md                  DocDrive 方法论定义、来源、三模块、扩展历史
 │
-├── patterns/                    可复用机制层（DocDrive 三模块的操作手册）
-│   ├── module-a-constraint.md   Module A：CBDA + SEL + BER + 阻塞协议
+├── patterns/                        可复用机制层（DocDrive 三模块操作手册）
+│   ├── module-a-constraint.md       Module A：CBDA + SEL + BER + 阻塞协议
 │   ├── module-b-batch-migration.md  Module B：样板优先批量执行协议
-│   └── module-c-visual-verify.md   Module C：VVC 结构化视觉验证清单
+│   └── module-c-visual-verify.md    Module C：VVC 结构化视觉验证清单
 │
-├── governance/                  规则治理层
-│   └── rule-governance.md       P0/P1/P2 规则分层框架（通用版）
+├── governance/                      规则治理层
+│   └── rule-governance.md           P0/P1/P2 规则分层框架（通用版）
 │
-├── workflow.md                  AI 协作分工 + 会话启动/收尾协议 + 变更原子性
+├── workflow.md                      AI 协作分工 + 会话启动/收尾协议 + 变更原子性
 │
-├── improvements/                改进记录（每次跨项目方法论升级在此存档）
-│   └── doc-sync-v1.md           改进 #1：文档代码同步原子性（2026-06-25）
+├── improvements/                    改进记录（每次方法论升级在此存档）
+│   └── doc-sync-v1.md               改进 #1：文档代码同步原子性（2026-06-25）
 │
-├── templates/                   项目启动模板
-│   ├── CLAUDE-template.md       新项目 CLAUDE.md 模板（含 P0/P1/P2 结构）
-│   └── backend-api-template.md  接口契约登记文件模板
+├── templates/                       项目启动模板
+│   ├── CLAUDE-template.md           新项目 CLAUDE.md 模板（含 P0/P1/P2 结构）
+│   └── backend-api-template.md      接口契约登记文件模板
 │
-└── ref/                         外部参考材料副本（独立可读，不依赖本机路径）
-    ├── harness-engineering-core.md   Harness Engineering 课程核心内容提炼
-    └── docdrive-origin-paper.md      DocDrive 原始论文关键章节（已脱敏）
+└── ref/                             外部参考材料副本（独立可读，不依赖外部路径）
+    ├── harness-engineering-core.md  Harness Engineering 课程核心内容提炼
+    └── docdrive-origin-paper.md     DocDrive 原始论文关键章节（已脱敏）
 ```
 
 ---
@@ -90,105 +88,126 @@ cqing-better-code/
 
 ### `foundations/docdrive.md`
 - **是什么：** DocDrive 方法论的正式定义文件
-- **读它获得：** DocDrive 是什么、来自哪里（某真实生产项目）、三模块定义、后续项目对它的扩展
+- **读它获得：** DocDrive 是什么、来自哪里、三模块定义、后续项目对它的扩展
 - **读完后去：** `patterns/` 下对应模块
 
 ### `patterns/module-a-constraint.md`
-- **是什么：** DocDrive Module A 的完整操作手册
 - **解决的问题：** agent 遇到阻塞时自行扩张范围
-- **包含：** CBDA 格式 + SEL 格式 + BER 格式 + 阻塞报告协议 + CLAUDE.md 引用方式
-- **何时使用：** 任何"需要限制 agent 修改范围"的任务
+- **包含：** CBDA / SEL / BER 三份文档格式 + 阻塞报告协议 + CLAUDE.md 引用方式
+- **何时使用：** 任何需要限制 agent 修改范围的任务
 
 ### `patterns/module-b-batch-migration.md`
-- **是什么：** DocDrive Module B 的完整操作手册
 - **解决的问题：** 多目标迁移时的遗漏与冗余
-- **包含：** 两阶段协议（样板 → 目标）+ 预执行确认清单格式 + 应用范围
-- **何时使用：** 多分支/多页面/多租户的同构改造任务
+- **包含：** 两阶段协议（样板 → 目标）+ 预执行确认清单格式
+- **何时使用：** 多分支 / 多页面 / 多租户的同构改造任务
 
 ### `patterns/module-c-visual-verify.md`
-- **是什么：** DocDrive Module C 的完整操作手册
-- **解决的问题：** 视觉正确性未被验证（结构正确 ≠ 视觉正确）
-- **包含：** VVC 格式 + 核心约束（无证据不判 PASS）+ 非 UI 场景应用
-- **何时使用：** 任何需要验证"实现与规格一致"的任务（不限于 UI）
+- **解决的问题：** 结构正确 ≠ 视觉正确，验收缺口被跳过
+- **包含：** VVC 格式（file:line + 实测值 + PASS/FAIL）+ 无证据不判 PASS 约束
+- **何时使用：** 任何需要验证"实现与规格一致"的任务，不限于 UI
 
 ### `governance/rule-governance.md`
-- **是什么：** P0/P1/P2 规则分层框架（通用版，不含项目特定内容）
-- **读它获得：** 如何对规则分层、每层的违反后果、规则生命周期管理
-- **何时使用：** 新项目设计 CLAUDE.md 规则结构时
+- **是什么：** P0/P1/P2 规则分层框架，通用版，不含项目特定内容
+- **何时使用：** 新项目设计 CLAUDE.md 规则结构时作为参照
 
 ### `workflow.md`
-- **是什么：** AI 协作分工模型 + 标准会话协议
-- **包含：** 三角色分工（Claude/Codex/用户）+ 会话启动/收尾 checklist + 变更原子性协议
-- **何时使用：** 每次项目启动时对照；每次会话收尾时执行 checklist
+- **包含：** 三角色分工（Claude / Codex / 用户）+ 会话启动 / 收尾 checklist + 变更原子性协议
+- **何时使用：** 项目启动时对照；会话收尾时执行 checklist
 
 ### `improvements/doc-sync-v1.md`
 - **是什么：** 第一个跨项目改进记录（文档代码同步原子性）
-- **读它获得：** 根因分析、解决方案、落地情况、适用范围
-- **作为范例：** 后续改进记录应遵循同样格式（问题 + 根因 + 解决方案 + 落地情况）
+- **作为范例：** 后续改进遵循同样格式——问题 + 根因 + 解决方案 + 落地情况
 
 ### `templates/CLAUDE-template.md`
-- **是什么：** 新项目 CLAUDE.md 的起始模板
 - **如何使用：** 复制到项目根目录 → 填写 `[占位项]` → 按需增减 P2 规则
 
 ### `templates/backend-api-template.md`
-- **是什么：** 接口契约登记文件（backend-api.md）的模板
 - **如何使用：** 复制到项目 docs/ 目录 → 每接入一个真实接口在此登记
 
 ### `ref/harness-engineering-core.md`
-- **是什么：** Harness Engineering 课程核心内容的提炼副本
-- **为何在 ref/：** 原始材料在本机路径，GitHub 无法访问；此文件是可独立阅读的副本
-- **读它获得：** 5子系统图、会话生命周期、12 讲速查表
+- **读它获得：** 5子系统图、会话生命周期、12 讲核心观点速查
+- **为何在 ref/：** 原始课程在外部，此文件是可独立阅读的提炼副本
 
 ### `ref/docdrive-origin-paper.md`
-- **是什么：** DocDrive 原始论文的关键章节提炼（已脱敏，来自某真实 B 端生产项目）
-- **为何在 ref/：** 原始论文在非公开代码库，此文件是可独立阅读的副本
-- **读它获得：** DocDrive 完整定义、失败案例、三模块正式规格、关键格式
+- **读它获得：** DocDrive 完整定义、两个基准失败案例、三模块正式规格与关键格式
+- **为何在 ref/：** 原始论文在非公开代码库，此文件是已脱敏的提炼副本
 
 ---
 
-## 如何使用这个库
+## 怎么用（自己）
 
-### 场景 1：启动新项目
-
-```
-1. 复制 templates/CLAUDE-template.md 到新项目根目录
-2. 阅读 foundations/docdrive.md，判断需要哪些模块
-3. 按需从 patterns/ 选取对应模块操作手册
-4. 在项目 CLAUDE.md 的规则部分，引用 governance/rule-governance.md 的 P0/P1/P2 结构
-5. 复制 templates/backend-api-template.md 到项目 docs/ 目录
-```
-
-### 场景 2：有多分支/多目标同构改造任务
+**启动新项目，做三件事：**
 
 ```
-1. 读 patterns/module-a-constraint.md，为任务制定 CBDA + SEL + BER
-2. 读 patterns/module-b-batch-migration.md，执行两阶段样板优先协议
-3. 完成每个目标后，用 Module C VVC 做提交前验证
+1. 复制 templates/CLAUDE-template.md 到新项目根目录，填写 [占位项]
+2. 在项目 CLAUDE.md 顶部写一行引用：
+   > 方法论参考：cqing-better-code/（见 governance/ + workflow.md）
+3. 复制 templates/backend-api-template.md 到项目 docs/ 目录
 ```
 
-### 场景 3：遇到 agent 越界/半成品/文档不同步等问题
+**项目运行中，按需查阅：**
 
-```
-1. 看 governance/rule-governance.md 判断属于哪层（P0/P1/P2）
-2. 看 improvements/ 是否已有对应改进记录
-3. 如果是新问题，在 improvements/ 下新建 xxx-v1.md 记录改进
-4. 同时更新 rule-governance.md 和 workflow.md
-5. 更新本 README 的版本日志
-```
+| 遇到的情况 | 去哪里查 |
+|-----------|---------|
+| 需要约束 agent 的改动范围 | `patterns/module-a-constraint.md` |
+| 多目标批量改造 | `patterns/module-b-batch-migration.md` |
+| 提交前验证功能与规格是否一致 | `patterns/module-c-visual-verify.md` |
+| 规则冲突，不知道哪条优先 | `governance/rule-governance.md` |
+| 会话收尾不知道做什么 | `workflow.md` §七收尾 checklist |
 
-### 场景 4：在 CLAUDE.md 中引用这个库
+**不要把库内容复制进项目**——引用可以随库更新；复制会产生版本漂移。
 
-在项目 CLAUDE.md 中写：
+---
+
+## 怎么分享给他人
+
+**给团队（共享同一套约束）：**
+
+把库推到团队可访问的 GitHub 仓库，在新项目 CLAUDE.md 里统一写：
 
 ```markdown
-## 方法论参考
-见 `cqing-better-code/`（GitHub 地址待定）
-- 规则分层：governance/rule-governance.md
-- 工作流协议：workflow.md
-- DocDrive 三模块：patterns/module-a/b/c-*.md
+> 方法论参考：https://github.com/[账号]/cqing-better-code
 ```
 
-不要把本库内容复制进项目——引用可以随库更新；复制会产生版本漂移。
+这样团队所有项目引用同一个来源，库更新后所有项目下一次会话自动生效。
+
+**给个人（让对方建自己的版本）：**
+
+让对方 fork 这个库。fork 之后：
+- `foundations/` 和 `patterns/` 保持不变（理论和三模块结构通用）
+- `governance/rule-governance.md` 的 P2 层按对方项目偏好修改
+- `improvements/` 由对方自己的项目教训填充
+
+两者共享的是方法论结构，分叉的是项目偏好规则。**不要让对方直接用你的库**——你的 P2 规则和你的项目上下文绑定，对别人没有意义。
+
+---
+
+## 怎么持续优化方法论
+
+**唯一可靠的方式：从实践提取，不从思考提取。**
+
+每次项目结束后问一个问题：**"这次出了什么问题，或者发现了什么更好的做法？"**
+
+- 一句话能说清楚 → 更新 `governance/rule-governance.md` 对应规则条目
+- 需要根因 + 解决方案 → 新建 `improvements/xxx-v1.md`，按现有格式写，更新版本日志
+
+**改进文件的格式（参照 `improvements/doc-sync-v1.md`）：**
+
+```
+问题描述（现象 + 根因）
+解决方案（核心重定义 + 具体操作）
+落地情况（已更新的文件清单 + 适用范围）
+```
+
+**警惕一个陷阱：** 不要在没有真实案例前预判需要什么规则然后加进去。空规则让库越来越难读、越来越难信任。**库的每一行都应该有对应的真实事件支撑。**
+
+**维护节奏：**
+
+```
+项目开始 → 用库里的模板启动
+项目中   → 遇到问题先查库，没有就自己解决
+项目结束 → 把解决方案写进 improvements/，更新版本日志
+```
 
 ---
 
@@ -197,4 +216,4 @@ cqing-better-code/
 | 版本 | 日期 | 内容 |
 |------|------|------|
 | v1 | 2026-06-25 | 初始提炼（dev-playbook）：P0/P1/P2 规则框架、AI 协作工作流、文档同步改进 |
-| v2 | 2026-06-25 | 重组为三层架构：foundations（Harness Engineering + DocDrive 定义）+ patterns（DocDrive 三模块操作手册）+ ref（外部材料副本）；重命名为 cqing-better-code |
+| v2 | 2026-06-25 | 重组为三层架构；新增 foundations（Harness Engineering + DocDrive）、patterns（DocDrive 三模块操作手册）、ref（外部材料副本）；重命名为 cqing-better-code；脱敏处理 |
