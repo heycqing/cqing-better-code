@@ -70,9 +70,10 @@
 1. 跑 build 验证（必须通过）
 2. 跑 grep createApi URL 核验（必须全部在 backend-api.md 有记录）
 3. 向用户展示 VVC 证据（file:line + 实测值，DocDrive Module C）
-4. 等人工审核门 4 通过
+4. 等人工审核门通过 ← 在此停止输出，不自行继续（改进 #2）
 5. 向用户展示拟写入 feature_list.json 的内容 → 等确认 → 写入
-6. 更新 claude-progress.md
+   - 有后端 TODO 未清理 → 状态填 pending-backend，不填 passing（改进 #4）
+6. 立即更新 claude-progress.md（状态变化时即刻，不等到会话结束）（改进 #4）
 ```
 
 ---
@@ -139,10 +140,31 @@ grep 项目内所有 createApi/fetch 调用的 URL
 
 - [ ] build/lint 通过（视项目而定）
 - [ ] grep createApi URL → backend-api.md 全部有对应条目
-- [ ] claude-progress.md 已追加本轮会话记录
-- [ ] feature_list.json 真实反映状态（无假 passing）
+- [ ] claude-progress.md 已更新（核验准确性，不是首次填写）
+- [ ] feature_list.json 真实反映状态：passing = 无残留 TODO；有后端 TODO = pending-backend
 - [ ] 无半成品处于未记录状态
 - [ ] 会话较长时已补 session-handoff.md
+
+---
+
+## 八、验证环境降级协议
+
+当理想验证环境不可用时（dev server 无法访问、UI 渲染异常、需要特定账号/数据），不得自行绕过或新增基础设施，应执行以下步骤：
+
+```
+1. 停止：不继续写依赖此环境的业务代码
+2. 声明：在 claude-progress.md 记录"当前验证环境状态 + 不可用原因"
+3. 协商降级方案：
+   - 方案 A：用 build 成功 + 代码逻辑核验 作为降级门控
+   - 方案 B：推迟此功能，先做不依赖此环境的功能
+   - 方案 C：用户提供可用的测试账号/环境后继续
+4. 等用户确认选哪个方案
+5. 在 feature_list.json 的该功能注记"已降级验证：build 通过，未视觉验证"
+```
+
+**核心禁止：**
+- ❌ 不得新增 mock 登录、绕过认证、修改 service 来"让环境跑起来"
+- ❌ 不得在降级验证下把功能标为完整 passing（只能标 pending-backend 或加注记）
 
 ---
 

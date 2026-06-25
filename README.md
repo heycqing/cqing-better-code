@@ -66,6 +66,10 @@ cqing-better-code/
 ├── workflow.md                      AI 协作分工 + 会话启动/收尾协议 + 变更原子性
 │
 ├── improvements/                    改进记录（每次方法论升级在此存档）
+│   ├── doc-sync-v1.md               改进 #1：文档代码同步原子性
+│   ├── review-gate-enforcement-v1.md 改进 #2：人工审核门执行纪律
+│   ├── mock-file-discipline-v1.md   改进 #3：Mock 文件四件套纪律
+│   └── feature-status-definition-v1.md 改进 #4：功能状态定义与进度文件即时更新
 │   └── doc-sync-v1.md               改进 #1：文档代码同步原子性（2026-06-25）
 │
 ├── templates/                       项目启动模板
@@ -114,9 +118,15 @@ cqing-better-code/
 - **包含：** 三角色分工（Claude / Codex / 用户）+ 会话启动 / 收尾 checklist + 变更原子性协议
 - **何时使用：** 项目启动时对照；会话收尾时执行 checklist
 
-### `improvements/doc-sync-v1.md`
-- **是什么：** 第一个跨项目改进记录（文档代码同步原子性）
-- **作为范例：** 后续改进遵循同样格式——问题 + 根因 + 解决方案 + 落地情况
+### `improvements/`
+每个文件格式：问题描述（现象 + 根因）→ 解决方案 → 落地情况。第一个文件（`doc-sync-v1.md`）是范例。
+
+| 文件 | 解决的问题 |
+|------|-----------|
+| `doc-sync-v1.md` | API 文档与代码不同步；文档更新被当作可以后补的次要工作 |
+| `review-gate-enforcement-v1.md` | 审核门定义了但从未执行；声明不等于执行 |
+| `mock-file-discipline-v1.md` | Mock 数据内联进共用 service；假接口无契约描述、无系统清理 |
+| `feature-status-definition-v1.md` | 功能状态机缺少中间态；进度文件更新滞后导致失真 |
 
 ### `templates/CLAUDE-template.md`
 - **如何使用：** 复制到项目根目录 → 填写 `[占位项]` → 按需增减 P2 规则
@@ -217,3 +227,4 @@ cqing-better-code/
 |------|------|------|
 | v1 | 2026-06-25 | 初始提炼（dev-playbook）：P0/P1/P2 规则框架、AI 协作工作流、文档同步改进 |
 | v2 | 2026-06-25 | 重组为三层架构；新增 foundations（Harness Engineering + DocDrive）、patterns（DocDrive 三模块操作手册）、ref（外部材料副本）；重命名为 cqing-better-code；脱敏处理 |
+| v3 | 2026-06-25 | 补入 4 条来自实际项目复盘的漏项：审核门执行纪律（#2）、Mock 文件四件套（#3）、功能状态定义 pending-backend（#4）；新增 §八验证环境降级协议 |
