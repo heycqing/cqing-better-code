@@ -206,7 +206,7 @@ cqing-better-code/
 把库推到团队可访问的 GitHub 仓库，在新项目 CLAUDE.md 里统一写：
 
 ```markdown
-> 方法论参考：https://github.com/[账号]/cqing-better-code
+> 方法论参考：https://github.com/heycqing/cqing-better-code
 ```
 
 这样团队所有项目引用同一个来源，库更新后所有项目下一次会话自动生效。
